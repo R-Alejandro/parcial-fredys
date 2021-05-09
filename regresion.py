@@ -51,6 +51,5 @@ plt.show()
 
 print(f"Precision del modelo (Porcentaje){pr.score(x_train_poly, y_train)}") 
 
-############################################################################
-#Suport vector machines
+
 
