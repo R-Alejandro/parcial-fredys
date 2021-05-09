@@ -12,10 +12,12 @@ X = dataframe.iloc[60:90,2].values #Open
 y = dataframe.iloc[60:90,5].values #Close
 
 punto_nuevo = {'Open': [1692.000000], 'Close': [1692.000000]}
+punto_nuevo = pd.DataFrame(punto_nuevo)
 
 ax = plt.axes()
 
-ax.scatter(dataframe.loc[dataframe['Genero'] == 'm', 'Altura'],c="blue",label="Mujer")
+
+ax.scatter(dataframe['Open'],dataframe['Close'],c="blue")
 
 ax.scatter(punto_nuevo['Open'],punto_nuevo['Close'],c="black")
 
@@ -26,8 +28,8 @@ plt.show()
 
 from sklearn.neighbors import KNeighborsClassifier
 knn = KNeighborsClassifier(n_neighbors=3)
-X = dataframe[['Masa', 'Altura']]
-y = dataframe[['Genero']]
+X = dataframe[['Open']]
+y = dataframe[['Close']]
 knn.fit(X, y)
 prediccion = knn.predict(punto_nuevo)
 print(prediccion)
