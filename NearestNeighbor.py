@@ -1,7 +1,8 @@
+import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from sklearn import neighbors, datasets
 import pandas as pd
-import seaborn as sns
-from sklearn.neighbors import KNeighborsClassifier
 # Importamos las librerias necesarias para las graficas y el algoritmo
 
 # Impoortamos la data 
@@ -11,25 +12,38 @@ dataframe = pd.read_csv("CryptoCoins.csv")
 X = dataframe.iloc[60:90,2].values #Open
 y = dataframe.iloc[60:90,5].values #Close
 
-punto_nuevo = {'Open': [1692.000000], 'Close': [1692.000000]}
-punto_nuevo = pd.DataFrame(punto_nuevo)
+n_neighbors = 15
 
-ax = plt.axes()
-
-
-ax.scatter(dataframe['Open'],dataframe['Close'],c="blue")
-
-ax.scatter(punto_nuevo['Open'],punto_nuevo['Close'],c="black")
-
-plt.xlabel("Open")
-plt.ylabel("Close")
-ax.legend()
+# tamaño del paso en la malla
+h = .02
+ 
+# Create color maps
+cmap_light = ListedColormap(['#FF1AAA', '#AAFAA1', '#AAAAA1'])
+cmap_bold = ListedColormap(['#FF0000', '#19FA05', '#AAAA99'])
+ 
+for weights in ['uniform', 'distance']:
+  # creamos una instancia de Clasificador de Vecinos y encajamos los datos.
+  clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
+  clf.fit(X, y)
+ 
+  #Plotea el límite de decisión. Para ello, asignaremos un color a cada uno de ellos.
+  # puntos de la malla [x_min, x_max]x[y_min, y_max].
+  x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+  y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+  xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+  np.arange(y_min, y_max, h))
+  Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+ 
+  # Pon el resultado con colores
+  Z = Z.reshape(xx.shape)
+  plt.figure()
+  plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
+ 
+  # plotea tambien los puntos de entrenamiento
+  plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold,edgecolor='k', s=20)
+  plt.xlim(xx.min(), xx.max())
+  plt.ylim(yy.min(), yy.max())
+  plt.title("3-Class classification (k = %i, weights = '%s')"
+            % (n_neighbors, weights))
+ 
 plt.show()
-
-from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier(n_neighbors=3)
-X = dataframe[['Open']]
-y = dataframe[['Close']]
-knn.fit(X, y)
-prediccion = knn.predict(punto_nuevo)
-print(prediccion)
