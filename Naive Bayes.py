@@ -7,10 +7,9 @@ import pandas as pd
 
 datos = pd.read_csv("CryptoCoins.csv")
 # filas, columnas
-X = datos.iloc[:20,[9,10]].values #Open
+X = datos.iloc[:100,[9,10]].values #Open
 # y = datos.iloc[:20,[10]]
-# Trampa
-S, y = make_blobs(20, 2, centers=2, random_state=2, cluster_std=1.5)
+S, y = make_blobs(100, 2, centers=2, random_state=2, cluster_std=1.5)
 
 plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='RdBu')
 plt.show()
@@ -18,7 +17,7 @@ plt.show()
 model = GaussianNB()
 model.fit(X, y)
 rng = np.random.RandomState(0)
-Xnew = [-6, -14] + [14, 18] * rng.rand(2000, 2)
+Xnew = [-6, -14] + [14, 18] * rng.rand(10000, 1)
 ynew = model.predict(Xnew)
 plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='RdBu')
 lim = plt.axis()
@@ -27,4 +26,10 @@ plt.axis(lim)
 yprob = model.predict_proba(Xnew)
 yprob[-8:].round(2)
 print(yprob)
+correct = 0
 
+
+for i in range(len(yprob)):
+    correct += yprob[i][1] * (yprob[i][0] * 100)
+
+print(f"Precision del modelo (Porcentaje) {(correct/float(len(yprob)))*100}") 
