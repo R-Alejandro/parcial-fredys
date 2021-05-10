@@ -5,8 +5,8 @@ import pandas as pd
 ############################################################################
 datos = pd.read_csv("./parcial/CryptoCoins.csv")
 # filas, columnas
-x = datos.iloc[60:90,2].values #Open
-y = datos.iloc[60:90,5].values #Close
+x = datos.iloc[60:160,2:3].values #Open 60:90
+y = datos.iloc[60:160,5].values #Close 60:90
 ############################################################################
 
 #loistic regression (regresion lineal)
