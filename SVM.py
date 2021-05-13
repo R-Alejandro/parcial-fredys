@@ -7,20 +7,27 @@ from sklearn import datasets
 ############################################################################
 datos = pd.read_csv("./parcial/CryptoCoins.csv")
 # filas, columnas
-datos = datasets.load_wine()
-x_train, x_test, y_train, y_test = train_test_split(datos.data, datos.target, test_size=0.3)
+x = datos.iloc[:100, 2:3].values
+y = datos.iloc[:100, 5].values
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
-""" x_train = np.array([x_train])
-x_train = x_train.transpose()
-print(x_train.shape)
-print(y_train.shape) """
+x_train = x_train.astype(int)
+y_train = y_train.astype(int)
+x_test = x_test.astype(int)
+y_test = y_test.astype(int)
+
 clasificador_lineal = svm.SVC(kernel='linear')
 clasificador_lineal.fit(x_train, y_train)
 
+#x_test = np.array([numero a evaluar])
 y_predic = clasificador_lineal.predict(x_test)
 print(y_predic)
 
+plt.scatter(x_train, y_train, color='red')
+plt.plot(x_train, clasificador_lineal.predict(x_train), color='blue')
+plt.title("Arbol de decision regresion")
+plt.xlabel("Open")
+plt.ylabel("Close")
+plt.show()
 #evaluamos la precision
-from sklearn import metrics
-prec = metrics.precision_score(y_test, y_predic, pos_label='positive',average='micro')
-print(f"precision: {prec}")
+print(f"precision de arbol de decision:\n {round(clasificador_lineal.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
