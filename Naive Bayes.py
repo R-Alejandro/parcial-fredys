@@ -7,8 +7,8 @@ import pandas as pd
 
 datos = pd.read_csv("CryptoCoins.csv")
 # filas, columnas
-X = datos.iloc[:100,[9,10]].values #Open
-# y = datos.iloc[:20,[10]]
+X = datos.iloc[:100,[9,10]].values
+# y = datos.iloc[:100,[10]]
 S, y = make_blobs(100, 2, centers=2, random_state=2, cluster_std=1.5)
 
 plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='RdBu')
