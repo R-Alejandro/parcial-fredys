@@ -26,7 +26,7 @@ y_predic = neigh.predict(x_test)
 
 plt.scatter(x_train, y_train, color='red')
 plt.plot(x_train, neigh.predict(x_train), color='blue')
-plt.title("Arbol de decision regresion")
+plt.title("Nearest Neighbor")
 plt.xlabel("Open")
 plt.ylabel("Close")
 plt.show()

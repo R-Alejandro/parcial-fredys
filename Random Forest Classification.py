@@ -1,4 +1,5 @@
-from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,22 +16,18 @@ y_train = y_train.astype(int)
 x_test = x_test.astype(int)
 y_test = y_test.astype(int)
 
-#Aquí tenemos un  GaussianNB() método que realiza exactamente las mismas funciones que el código explicado anteriormente
-model = GaussianNB()
-model.fit(x_train, y_train)
+clf = RandomForestClassifier(max_depth=2, random_state=0)
+clf.fit(x_train, y_train)
 
-#Haciendo predicciones
-expected = y_test
-y_predic = model.predict(x_test)
-
+y_predic = clf.predict(x_test)
 
 plt.scatter(x_train, y_train, color='red')
-plt.plot(x_train, model.predict(x_train), color='blue')
-plt.title("Naive Bayes")
+plt.plot(x_train, clf.predict(x_train), color='blue')
+plt.title("Random Forest Classification")
 plt.xlabel("Open")
 plt.ylabel("Close")
 plt.show()
 
 # print(metrics.classification_report(expected, predicted))
 # print(metrics.confusion_matrix(expected, predicted))
-print(f"precision de arbol de decision:\n {round(model.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
+print(f"precision de arbol de decision:\n {round(clf.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
