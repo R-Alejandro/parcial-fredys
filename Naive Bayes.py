@@ -33,3 +33,5 @@ for i in range(len(yprob)):
     correct += yprob[i][1] * (yprob[i][0] * 100)
 
 print(f"Precision del modelo (Porcentaje) {(correct/float(len(yprob)))*100}") 
+
+print(y)

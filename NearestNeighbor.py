@@ -1,42 +1,34 @@
 from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KDTree
+from sklearn.neighbors import KNeighborsClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
 
-datos = pd.read_csv("CryptoCoins.csv")
 
-X = datos.iloc[:100,[9,10]].values
-Xu = datos.iloc[:100,[9]].values
-Xd = datos.iloc[:100,[10]].values
+dataset = pd.read_csv("CryptoCoins.csv")
 
-nbrs = NearestNeighbors(n_neighbors=2, algorithm='ball_tree').fit(X)
-distances, indices = nbrs.kneighbors(X)
+x_train = dataset.iloc[:100, 2:3].values #:30
+y_train = dataset.iloc[:100, 5].values #:30
+x_test = dataset.iloc[110:210, 2:3].values #70:100
+y_test = dataset.iloc[110:210, 5].values# 70:100
 
-kdt = KDTree(X, leaf_size=30, metric='euclidean')
-kdtFind = kdt.query(X, k=2, return_distance=False)
+x_train = x_train.astype(int)
+y_train = y_train.astype(int)
+x_test = x_test.astype(int)
+y_test = y_test.astype(int)
 
-print("\nindices \n",indices)
-print("\ndistancias \n",distances)
-print("\nConecciones entre los puntos vecinos \n",nbrs.kneighbors_graph(X).toarray())
-print("\nKDTree and BallTree Classes to find nearest neighbors \n",kdtFind)
+# Test2
+neigh = KNeighborsClassifier(n_neighbors=3)
+neigh.fit(x_train, y_train)
+y_predic = neigh.predict(x_test)
 
-# plt.scatter(Xu, Xd, color='red')
-# plt.title("Nearest Neighbor")
-# plt.xlabel("Open")
-# plt.ylabel("Close")
-# plt.show()
-correct = 0
+plt.scatter(x_train, y_train, color='red')
+plt.plot(x_train, neigh.predict(x_train), color='blue')
+plt.title("Arbol de decision regresion")
+plt.xlabel("Open")
+plt.ylabel("Close")
+plt.show()
 
-# print(indices)
-# print(kdt.query(X, k=2, return_distance=False))
-
-
-
-for i in range(len(X)):
-    if int(indices[i,1]) == int(kdtFind[i,1]):
-        correct += 1
-
-#precision del modelo
-print(f"precision de Nearest Neighbor:\n {correct*0.01}")
+print(f"precision de arbol de decision:\n {round(neigh.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
