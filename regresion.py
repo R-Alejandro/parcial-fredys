@@ -18,11 +18,11 @@ y_train=np.array(y_train).reshape(-1,1)
 r.fit(x_train, y_train)
 y_predict = r.predict(np.array(x_test).reshape(-1,1))
 plt.figure(figsize=(10,7))
-plt.scatter(x_test, y_test)
-plt.title("Open vs Close")
-plt.xlabel("Open")
-plt.ylabel("Close")
-plt.plot(x_test, y_predict, color='red', linewidth=5)
+plt.scatter(x_test, y_test, color='red')
+plt.title("Logistic Regression")
+plt.xlabel("Valor inicial")
+plt.ylabel("Valor final")
+plt.plot(x_test, y_predict, color='blue', linewidth=5)
 plt.show()
 
 print(f"valor de la pendiente a: {r.coef_}")
@@ -42,14 +42,14 @@ pr = linear_model.LinearRegression()
 pr.fit(x_train_poly, y_train) #entrena el modelo
 Y_pred = pr.predict(x_test_poly)
 
-plt.scatter(x_test, y_test)
-plt.title("Regresion polinomial")
-plt.xlabel("Open")
-plt.ylabel("Close")
-plt.plot(x_test, Y_pred, color='red')
+plt.scatter(x_test, y_test, color='red')
+plt.title("Logistic Regression")
+plt.xlabel("Valor inicial")
+plt.ylabel("Valor final")
+plt.plot(x_test, Y_pred, color='blue')
 plt.show()
 
-print(f"Precision del modelo (Porcentaje){pr.score(x_train_poly, y_train)}") 
+print(f"Precision del modelo (Porcentaje): {pr.score(x_train_poly, y_train)}") 
 
 
 

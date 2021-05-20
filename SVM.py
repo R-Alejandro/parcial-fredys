@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn import svm
 from sklearn import datasets
 ############################################################################
-datos = pd.read_csv("./parcial/CryptoCoins.csv")
+datos = pd.read_csv("CryptoCoins.csv")
 # filas, columnas
 x = datos.iloc[:100, 2:3].values
 y = datos.iloc[:100, 5].values
@@ -25,9 +25,9 @@ print(y_predic)
 
 plt.scatter(x_train, y_train, color='red')
 plt.plot(x_train, clasificador_lineal.predict(x_train), color='blue')
-plt.title("Arbol de decision regresion")
-plt.xlabel("Open")
-plt.ylabel("Close")
+plt.title("Support Vector Machines")
+plt.xlabel("Valor inicial")
+plt.ylabel("Valor final")
 plt.show()
 #evaluamos la precision
-print(f"precision de arbol de decision:\n {round(clasificador_lineal.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
+print(f"precision de Support Vector Machines:\n {round(clasificador_lineal.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")

@@ -28,9 +28,9 @@ y_predic = neigh.predict(x_test)
 plt.scatter(x_train, y_train, color='red')
 plt.plot(x_train, neigh.predict(x_train), color='blue')
 plt.title("Nearest Neighbor")
-plt.xlabel("Open")
-plt.ylabel("Close")
+plt.xlabel("Valor inicial")
+plt.ylabel("Valor final")
 plt.show()
 
 # Se calacula la presicion
-print(f"precision de arbol de decision:\n {round(neigh.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
+print(f"precision de Nearest Neighbor:\n {round(neigh.score(np.array(y_test).reshape(-1,1), np.array(y_predic).reshape(-1,1)) * 100, 2)}")
