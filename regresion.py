@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 import pandas as pd
 ############################################################################
-datos = pd.read_csv("./parcial/CryptoCoins.csv")
+datos = pd.read_csv("CryptoCoins.csv")
 # filas, columnas
 x = datos.iloc[60:160,2:3].values #Open 60:90
 y = datos.iloc[60:160,5].values #Close 60:90
