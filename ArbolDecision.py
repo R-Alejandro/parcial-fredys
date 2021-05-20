@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier
 
 dataset = pd.read_csv("./parcial/CryptoCoins.csv")
 x_train = dataset.iloc[:100, 2:3].values #:30
@@ -13,7 +14,7 @@ y_train = y_train.astype(int)
 x_test = x_test.astype(int)
 y_test = y_test.astype(int)
 
-from sklearn.tree import DecisionTreeClassifier
+
 regresor = DecisionTreeClassifier()
 regresor.fit(x_train,y_train)
 
